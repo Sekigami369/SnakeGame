@@ -5,7 +5,7 @@ public class Snake
 {
     public static void Main(string[] args)
     {
-        DateTime date = DateTime.Now;
+        DateTime time = DateTime.Now;
 
         Random random = new Random();
         //foodの出現位置に使う乱数
@@ -28,6 +28,8 @@ public class Snake
         //スネークの初期の体の長さ
 
         int food = 0;
+        int leftfood = 0;
+        int topfood = 0;
 
         int user = 0;
         //ユーザーからの入力を受け取るための変数　後でユーザーの入力を格納する
@@ -95,7 +97,7 @@ public class Snake
 
         while (true)
         {
-            bool hite = false;
+            bool hit = false;
             Console.Clear();
 
             //入力による進行方向の選択
@@ -107,17 +109,122 @@ public class Snake
 
             else if (direction == "UP") top--;
 
+            //方向キーを指定
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            if(keyInfo.Key == ConsoleKey.RightArrow && direction != "LEFT")
+            {
+                direction = "RIGHT";
+            }
+            else if (keyInfo.Key == ConsoleKey.LeftArrow && direction != "RIGHT")
+            {
+                direction = "LEFT";
+            }
+            else if (keyInfo.Key == ConsoleKey.UpArrow && direction != "DOWN")
+            {
+                direction = "UP";
+            }
+            else if (keyInfo.Key == ConsoleKey.DownArrow && direction != "UP")
+            {
+                direction = "DOWN";
+            }
+
+
 
             //ゲームの当たり判定
-            if (top == screenHeight - 1) hite = true;
+            if (top == screenHeight - 1) hit = true;
 
-            if (top == 0) hite = true;
+            if (top == 0) hit = true;
 
-            if (left == screenWidth - 1) hite = true;
+            if (left == screenWidth - 1) hit = true;
 
-            if(left == 0) hite = true;
+            if(left == 0) hit = true;
+
+            //スネークの頭が壁もしくは自分と座標が重なったらあたり判定
+            for(int f = 0; f < topbody.Count; f++)
+            {
+                if(top == topbody[f] && left == leftbody[f]) hit = true;
+            }
+
+            if (hit)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 - 1);
+                Console.Write("Game over");
+                Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 1);
+                Console.Write("Press enter to exit the game");
+                string SaveScore = "score: " + score;
+                Console.SetCursorPosition(screenWidth / 5, screenHeight / 2);
+                Console.Write(SaveScore);
+                string usetime = "Survival Time: " + time.Minute + ":" + time.Second;
+                Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 2);
+                Console.Write(usetime);
+
+                Console.WriteLine(usetime);
+                Console.ReadKey();
+
+                //リスタート処理をここに書く
+            }
+
+            //food を取ったときの処理
+            if(top == food)
+            {
+                if(left == leftfood)
+                {
+                    score++;
+                    bodyLength++;
+                    if(sleep >= 35)
+                    {
+                        sleep = -5;
+                    }
+                    food = 0;
+                }
+            }
 
 
+            //ランダムな位置にfoodを表示させる
+            if(food == 0)
+            {
+                leftfood = random.Next(1, screenWidth - 2);
+                topfood = random.Next(1, screenHeight - 2);
+                food = 1;
+            }
+            Console.SetCursorPosition(leftfood, topfood);
+            Console.Write("●");
+
+
+            //移動を表現するために先頭に新しい体を追加
+            //追加して長くなった分末尾を削除することで前に進む
+            leftbody.Insert(0, left);
+            topbody.Insert(0, top);
+            if(topbody.Count > bodyLength)
+            {
+                leftbody.RemoveAt(leftbody.Count -1);
+                topbody.RemoveAt(topbody.Count -1);
+            }
+
+
+            time = DateTime.Now;
+            Console.SetCursorPosition(2, 0);
+            Console.Write("score: " + score);
+            Console.SetCursorPosition(2, 1);
+            Console.Write("Survival Time: " + time.Minute + ":" + time.Second);
+
+
+
+            //スネークの体作る
+            for(int i = 0; i < topbody.Count; i++)
+            {
+                Console.SetCursorPosition(leftbody[i], topbody[i]);
+                Console.Write("■");
+            }
+            
+            Thread.Sleep(sleep);
         }
     }
 } 
+
+//当たり判定がおかしい
+//スネークが自動ですすまない？
+//全体的に表示されてない
+//foodも座標（０，０）の位置にしか出ない
