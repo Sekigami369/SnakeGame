@@ -8,6 +8,7 @@ public class Snake
         DateTime time = DateTime.Now;
 
         Random random = new Random();
+        
         //foodの出現位置に使う乱数
 
         Console.WindowHeight = 32;
@@ -50,12 +51,12 @@ public class Snake
         topbody.Insert(0, 0);
         leftbody.Insert(0, screenMiddle);
         //スネークの体のfoodを食べたときの挿入される位置に使う
-
+        leftfood = random.Next(1, screenHeight - 2);
+        topfood = random.Next(1, screenWidth - 2);
         food = 1;
 
-
         //コンソール画面の枠を■で並べて壁を作る
-        for(int i = 0; i < screenWidth - 1; i++)
+        for (int i = 0; i < screenWidth - 1; i++)
         {
             Console.SetCursorPosition(i, 0);
             Console.Write("■");
@@ -78,7 +79,6 @@ public class Snake
             Console.SetCursorPosition(screenWidth - 1, i);
             Console.Write("■");
         }
-
 
         Console.SetCursorPosition(screenWidth / 4, screenHeight / 2);
         Console.Write("Welcome to the Snake Game.");
@@ -129,8 +129,6 @@ public class Snake
                 direction = "DOWN";
             }
 
-
-
             //ゲームの当たり判定
             if (top == screenHeight - 1) hit = true;
 
@@ -167,7 +165,7 @@ public class Snake
             }
 
             //food を取ったときの処理
-            if(top == food)
+            if(top == topfood)
             {
                 if(left == leftfood)
                 {
@@ -185,11 +183,11 @@ public class Snake
             //ランダムな位置にfoodを表示させる
             if(food == 0)
             {
-                leftfood = random.Next(1, screenWidth - 2);
-                topfood = random.Next(1, screenHeight - 2);
+                leftfood = random.Next(1,  screenHeight - 2);
+                topfood = random.Next(1, screenWidth - 2);
                 food = 1;
             }
-            Console.SetCursorPosition(leftfood, topfood);
+            Console.SetCursorPosition(topfood, leftfood);
             Console.Write("●");
 
 
