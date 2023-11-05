@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 public class Snake
 {
@@ -7,7 +8,7 @@ public class Snake
     {
         DateTime time = DateTime.Now;
 
-        Random random = new Random();
+        Random random;
         
         //foodの出現位置に使う乱数
 
@@ -27,7 +28,7 @@ public class Snake
 
         int bodyLength = 3;
         //スネークの初期の体の長さ
-
+        
         int food = 0;
         int leftfood = 0;
         int topfood = 0;
@@ -35,8 +36,8 @@ public class Snake
         int user = 0;
         //ユーザーからの入力を受け取るための変数　後でユーザーの入力を格納する
 
-        int top = 0;
-        int left = 0;
+        int top = screenHeight / 2;
+        int left = screenMiddle;
         //スネークの頭の上と左の座標を示す変数宣言　
 
         string direction = "RIGHT";
@@ -48,14 +49,26 @@ public class Snake
         List<int> leftbody = new List<int>();
         //topbodyとleftbodyを宣言　スネークの体の位置を管理する
 
-        topbody.Insert(0, 0);
-        leftbody.Insert(0, screenMiddle);
-        //スネークの体のfoodを食べたときの挿入される位置に使う
-        leftfood = random.Next(1, screenHeight - 2);
-        topfood = random.Next(1, screenWidth - 2);
-        food = 1;
 
         //コンソール画面の枠を■で並べて壁を作る
+       
+
+        Console.SetCursorPosition(screenWidth / 4, screenHeight / 2);
+        Console.Write("Welcome to the Snake Game.");
+        Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 1);
+        Console.Write("Use the arrow keys to collect the food.");
+        Console.SetCursorPosition(screenWidth / 4, screenHeight / 2 + 3);
+        Console.Write("Press any key to start.");
+        //ゲームタイトルと説明等を表示
+
+        Console.CursorVisible = false;
+        //カーソル非表示
+        Console.ReadKey();
+        //ユーザーからの入力待機
+        Console.CursorVisible = false;
+        //入力があったら再度カーソルを非表示にする
+        Console.Clear();
+
         for (int i = 0; i < screenWidth - 1; i++)
         {
             Console.SetCursorPosition(i, 0);
@@ -80,25 +93,11 @@ public class Snake
             Console.Write("■");
         }
 
-        Console.SetCursorPosition(screenWidth / 4, screenHeight / 2);
-        Console.Write("Welcome to the Snake Game.");
-        Console.SetCursorPosition(screenWidth / 5, screenHeight / 2 + 1);
-        Console.Write("Use the arrow keys to collect the food.");
-        Console.SetCursorPosition(screenWidth / 4, screenHeight / 2 + 3);
-        Console.Write("Press any key to start.");
-        //ゲームタイトルと説明等を表示
 
-        Console.CursorVisible = false;
-        //カーソル非表示
-        Console.ReadKey();
-        //ユーザーからの入力待機
-        Console.CursorVisible = false;
-        //入力があったら再度カーソルを非表示にする
 
         while (true)
-        {
+        {            
             bool hit = false;
-            Console.Clear();
 
             //入力による進行方向の選択
             if (direction == "RIGHT") left++;
@@ -165,30 +164,35 @@ public class Snake
             }
 
             //food を取ったときの処理
-            if(top == topfood)
-            {
-                if(left == leftfood)
+            if(top == topfood && left == leftfood)
+            {             
+                              
+                score++;
+                bodyLength++;
+                if(sleep >= 35)
                 {
-                    score++;
-                    bodyLength++;
-                    if(sleep >= 35)
-                    {
-                        sleep = -5;
-                    }
-                    food = 0;
+                   sleep = -5;
                 }
+                Console.SetCursorPosition(topfood, leftfood);
+                Console.Write("");
+                food = 0;
+         
+                
             }
 
 
             //ランダムな位置にfoodを表示させる
             if(food == 0)
             {
+                random = new Random();
                 leftfood = random.Next(1,  screenHeight - 2);
                 topfood = random.Next(1, screenWidth - 2);
+                
+                Console.SetCursorPosition(topfood, leftfood);
+                Console.Write("●");
                 food = 1;
+            
             }
-            Console.SetCursorPosition(topfood, leftfood);
-            Console.Write("●");
 
 
             //移動を表現するために先頭に新しい体を追加
@@ -221,8 +225,7 @@ public class Snake
         }
     }
 } 
-
+//スネークの体が進むと増え続ける
 //当たり判定がおかしい
-//スネークが自動ですすまない？
-//全体的に表示されてない
-//foodも座標（０，０）の位置にしか出ない
+//スネークが自動ですすまない
+//foodが新たに出現していない
