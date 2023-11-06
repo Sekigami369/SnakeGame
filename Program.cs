@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 public class Snake
@@ -8,7 +9,7 @@ public class Snake
     {
         DateTime time = DateTime.Now;
 
-        Random random;
+        Random random  = new Random();
         
         //foodの出現位置に使う乱数
 
@@ -29,7 +30,7 @@ public class Snake
         int bodyLength = 3;
         //スネークの初期の体の長さ
         
-        int food = 0;
+       
         int leftfood = 0;
         int topfood = 0;
 
@@ -42,11 +43,12 @@ public class Snake
 
         string direction = "RIGHT";
 
-        int sleep = 100;
+        int sleep = 500;
         //ゲームの進行速度制御の値　初期値１００ミリ秒
 
         List<int> topbody = new List<int>();
         List<int> leftbody = new List<int>();
+        List<string> food = new List<string>();
         //topbodyとleftbodyを宣言　スネークの体の位置を管理する
 
 
@@ -67,7 +69,6 @@ public class Snake
         //ユーザーからの入力待機
         Console.CursorVisible = false;
         //入力があったら再度カーソルを非表示にする
-        Console.Clear();
 
         for (int i = 0; i < screenWidth - 1; i++)
         {
@@ -94,11 +95,12 @@ public class Snake
         }
 
 
-
         while (true)
-        {            
+        {
+            Console.Clear();
             bool hit = false;
 
+           
             //入力による進行方向の選択
             if (direction == "RIGHT") left++;
 
@@ -108,26 +110,34 @@ public class Snake
 
             else if (direction == "UP") top--;
 
-            //方向キーを指定
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
 
-            if(keyInfo.Key == ConsoleKey.RightArrow && direction != "LEFT")
-            {
-                direction = "RIGHT";
-            }
-            else if (keyInfo.Key == ConsoleKey.LeftArrow && direction != "RIGHT")
-            {
-                direction = "LEFT";
-            }
-            else if (keyInfo.Key == ConsoleKey.UpArrow && direction != "DOWN")
-            {
-                direction = "UP";
-            }
-            else if (keyInfo.Key == ConsoleKey.DownArrow && direction != "UP")
-            {
-                direction = "DOWN";
-            }
 
+
+            //キーイベントが発生するまでfalseなのでキー入力に依存しなくて
+            //スネークが動き続ける
+            if (Console.KeyAvailable)
+            {
+                //方向キーを指定
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+                if (keyInfo.Key == ConsoleKey.RightArrow && direction != "LEFT")
+                {
+                    direction = "RIGHT";
+                }
+                else if (keyInfo.Key == ConsoleKey.LeftArrow && direction != "RIGHT")
+                {
+                    direction = "LEFT";
+                }
+                else if (keyInfo.Key == ConsoleKey.UpArrow && direction != "DOWN")
+                {
+                    direction = "UP";
+                }
+                else if (keyInfo.Key == ConsoleKey.DownArrow && direction != "UP")
+                {
+                    direction = "DOWN";
+                }
+            }
+            
             //ゲームの当たり判定
             if (top == screenHeight - 1) hit = true;
 
@@ -137,11 +147,13 @@ public class Snake
 
             if(left == 0) hit = true;
 
+
             //スネークの頭が壁もしくは自分と座標が重なったらあたり判定
             for(int f = 0; f < topbody.Count; f++)
             {
                 if(top == topbody[f] && left == leftbody[f]) hit = true;
             }
+
 
             if (hit)
             {
@@ -163,48 +175,27 @@ public class Snake
                 //リスタート処理をここに書く
             }
 
-            //food を取ったときの処理
-            if(top == topfood && left == leftfood)
-            {             
-                              
+            string removeFood = "●";
+            if (top == topfood && left == leftfood)
+            {
+                food.Clear();
                 score++;
                 bodyLength++;
-                if(sleep >= 35)
-                {
-                   sleep = -5;
-                }
-                Console.SetCursorPosition(topfood, leftfood);
-                Console.Write("");
-                food = 0;
-         
-                
             }
+
 
 
             //ランダムな位置にfoodを表示させる
-            if(food == 0)
+            if (!food.Contains(removeFood))
             {
-                random = new Random();
+               
+                food.Insert(0,"●");
                 leftfood = random.Next(1,  screenHeight - 2);
-                topfood = random.Next(1, screenWidth - 2);
-                
-                Console.SetCursorPosition(topfood, leftfood);
-                Console.Write("●");
-                food = 1;
-            
+                topfood = random.Next(1, screenWidth - 2);              
+               
             }
-
-
-            //移動を表現するために先頭に新しい体を追加
-            //追加して長くなった分末尾を削除することで前に進む
-            leftbody.Insert(0, left);
-            topbody.Insert(0, top);
-            if(topbody.Count > bodyLength)
-            {
-                leftbody.RemoveAt(leftbody.Count -1);
-                topbody.RemoveAt(topbody.Count -1);
-            }
-
+            Console.SetCursorPosition(topfood, leftfood);
+            Console.Write(food[0]);
 
             time = DateTime.Now;
             Console.SetCursorPosition(2, 0);
@@ -220,11 +211,22 @@ public class Snake
                 Console.SetCursorPosition(leftbody[i], topbody[i]);
                 Console.Write("■");
             }
-            
+
+
+            //移動を表現するために先頭に新しい体を追加
+            //追加して長くなった分末尾を削除することで前に進む
+            leftbody.Insert(0, left);
+            topbody.Insert(0, top);
+            if (topbody.Count > bodyLength)
+            {
+                leftbody.RemoveAt(leftbody.Count - 1);
+                topbody.RemoveAt(topbody.Count - 1);
+
+            }
             Thread.Sleep(sleep);
         }
     }
-} 
+}
 //スネークの体が進むと増え続ける
 //当たり判定がおかしい
 //スネークが自動ですすまない
