@@ -43,7 +43,7 @@ public class Snake
 
         string direction = "RIGHT";
 
-        int sleep = 500;
+        int sleep = 90;
         //ゲームの進行速度制御の値　初期値１００ミリ秒
 
         List<int> topbody = new List<int>();
@@ -70,30 +70,6 @@ public class Snake
         Console.CursorVisible = false;
         //入力があったら再度カーソルを非表示にする
 
-        for (int i = 0; i < screenWidth - 1; i++)
-        {
-            Console.SetCursorPosition(i, 0);
-            Console.Write("■");
-        }
-
-        for (int i = 0; i < screenWidth - 1; i++)
-        {
-            Console.SetCursorPosition(i, screenHeight - 1);
-            Console.Write("■");
-        }
-
-        for (int i = 0; i < screenHeight - 1; i++)
-        {
-            Console.SetCursorPosition(0, i);
-            Console.Write("■");
-        }
-
-        for (int i = 0; i < screenHeight - 1; i++)
-        {
-            Console.SetCursorPosition(screenWidth - 1, i);
-            Console.Write("■");
-        }
-
 
         while (true)
         {
@@ -109,8 +85,6 @@ public class Snake
             else if (direction == "DOWN") top++;
 
             else if (direction == "UP") top--;
-
-
 
 
             //キーイベントが発生するまでfalseなのでキー入力に依存しなくて
@@ -171,12 +145,12 @@ public class Snake
 
                 Console.WriteLine(usetime);
                 Console.ReadKey();
+                Environment.Exit(0);
 
-                //リスタート処理をここに書く
             }
 
             string removeFood = "●";
-            if (top == topfood && left == leftfood)
+            if (left == topfood && top == leftfood)
             {
                 food.Clear();
                 score++;
@@ -190,8 +164,8 @@ public class Snake
             {
                
                 food.Insert(0,"●");
-                leftfood = random.Next(1,  screenHeight - 2);
-                topfood = random.Next(1, screenWidth - 2);              
+                leftfood = random.Next(6,  screenHeight - 6);
+                topfood = random.Next(6, screenWidth - 6);              
                
             }
             Console.SetCursorPosition(topfood, leftfood);
@@ -227,7 +201,3 @@ public class Snake
         }
     }
 }
-//スネークの体が進むと増え続ける
-//当たり判定がおかしい
-//スネークが自動ですすまない
-//foodが新たに出現していない

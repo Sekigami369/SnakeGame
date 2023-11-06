@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sekigami\\source\\repos\\SnakeGame\\SnakeGame.csproj": {}
+    "C:\\Users\\skgmy\\source\\repos\\SnakeGame\\SnakeGame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sekigami\\source\\repos\\SnakeGame\\SnakeGame.csproj": {
+    "C:\\Users\\skgmy\\source\\repos\\SnakeGame\\SnakeGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sekigami\\source\\repos\\SnakeGame\\SnakeGame.csproj",
+        "projectUniqueName": "C:\\Users\\skgmy\\source\\repos\\SnakeGame\\SnakeGame.csproj",
         "projectName": "SnakeGame",
-        "projectPath": "C:\\Users\\sekigami\\source\\repos\\SnakeGame\\SnakeGame.csproj",
-        "packagesPath": "C:\\Users\\sekigami\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sekigami\\source\\repos\\SnakeGame\\obj\\",
+        "projectPath": "C:\\Users\\skgmy\\source\\repos\\SnakeGame\\SnakeGame.csproj",
+        "packagesPath": "C:\\Users\\skgmy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\skgmy\\source\\repos\\SnakeGame\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sekigami\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\skgmy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
