@@ -43,7 +43,7 @@ public class Snake
 
         string direction = "RIGHT";
 
-        int sleep = 90;
+        int sleep = 100;
         //ゲームの進行速度制御の値　初期値１００ミリ秒
 
         List<int> topbody = new List<int>();
@@ -155,6 +155,7 @@ public class Snake
                 food.Clear();
                 score++;
                 bodyLength++;
+                sleep += -3;
             }
 
 

@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "+lo3oRx7X8PBtlTCEn9CJ+G4PilBw2VUzeKoxOnaMlJInL0zzRHR5Vjp5pjdRpDFC1LVq7tHayxMi++QpO+grg==",
+  "dgSpecHash": "4A8ZBK6uZlj4i89jhu5heax2bFUT3l0O0ZCzlBp7WOixgXOFG8cPcg5xzm88/H9O56DjmQaswjkIIqX6diN8OA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\skgmy\\source\\repos\\SnakeGame\\SnakeGame.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\SnakeGame\\SnakeGame.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.25\\microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.25\\microsoft.netcore.app.host.win-x64.6.0.25.nupkg.sha512"
+  ],
   "logs": []
 }
